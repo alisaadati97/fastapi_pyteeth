@@ -12,12 +12,14 @@ class Teeth():
         self.top_six_image = 0
         
         req = urlopen(url)
+        print(req)
         arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
         image =  cv2.imdecode(arr, -1) 
         
         print("__init__")
         #self.reshape_image(image)
         self.image = image
+        self.resized_image = None
         #return image
 
     def reshape_image(self , image=None):
