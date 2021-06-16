@@ -6,18 +6,23 @@ import numpy as np
 from detector import ObjectDetector
 
 class Teeth():
-    def __init__(self , url=None,image = None):
+    def __init__(self , url):
+        print("__init__")
         self.coords = 0
         self.top_six_image = 0
-        if url != None:
-            req = urlopen(url)
-            arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
-            image =  cv2.imdecode(arr, -1) 
+        
+        req = urlopen(url)
+        arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
+        image =  cv2.imdecode(arr, -1) 
+        
         print("__init__")
-        self.reshape_image(image)
+        #self.reshape_image(image)
+        self.image = image
         #return image
 
-    def reshape_image(self , image):
+    def reshape_image(self , image=None):
+        if image == None:
+            image = self.image
         if image.shape[0] < 1000 and image.shape[1] < 1000:
             return image
         if image.shape[0] > image.shape[1]:
@@ -26,7 +31,8 @@ class Teeth():
             ratio = 640/ image.shape[1]
         resized_image = cv2.resize(image, (0,0), fx=ratio, fy=ratio) 
         
-        self.detect_top_six_teeth_for_edit(resized_image)
+        self.resized_image = resized_image
+        #self.detect_top_six_teeth_for_edit(resized_image)
         #return resized_image
     
     def detect_top_six_teeth_for_edit(self , image):

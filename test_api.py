@@ -6,4 +6,4 @@ data = {
   "url": image_url,
 }
 response = requests.post(url,json=data)
-print(response)
+print(response.text)
